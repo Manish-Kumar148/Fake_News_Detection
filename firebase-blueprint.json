@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "analysis": {
+      "title": "Analysis Result",
+      "description": "Represents a news analysis result",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "content": { "type": "string" },
+        "type": { "type": "string", "enum": ["text", "url"] },
+        "confidenceScore": { "type": "number" },
+        "verdict": { "type": "string", "enum": ["Real", "Fake", "Suspicious", "Inconclusive"] },
+        "analysis": { "type": "string" },
+        "suspiciousWords": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "source": { "type": "string" },
+            "author": { "type": "string" },
+            "publishedDate": { "type": "string" }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "content", "verdict", "confidenceScore", "createdAt"]
+    },
+    "userProfile": {
+      "title": "User Profile",
+      "description": "Public and private user information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "email": { "type": "string" },
+        "stats": {
+          "type": "object",
+          "properties": {
+            "checksPerformed": { "type": "number" },
+            "trustScore": { "type": "number" }
+          }
+        }
+      },
+      "required": ["uid", "email"]
+    }
+  },
+  "firestore": {
+    "analyses": {
+      "schema": "analysis",
+      "description": "Collection of fake news analysis results"
+    },
+    "users": {
+      "schema": "userProfile",
+      "description": "User profiles and statistics"
+    }
+  }
+}
